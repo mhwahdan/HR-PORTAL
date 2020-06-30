@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+//load user information from session
+function accept(id,job)
+{
+  var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+ if (this.readyState == 4 && this.status == 200) {
+   alert(this.responseText);
+ }
+}
+xmlhttp.open("GET", "accept.php?q=" + id + "&p=" + job, true);
+xmlhttp.send();
+}
+  var name = sessionStorage.getItem("name");
+  function texts(){
+  var textareas = document.getElementsByTagName('textarea');
+  var count = textareas.length;
+  for(var i=0;i<count;i++){
+  textareas[i].onkeydown = function(e){
+      if(e.keyCode==9 || e.which==9){
+          e.preventDefault();
+          var s = this.selectionStart;
+          this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
+          this.selectionEnd = s+1;
+      }
+  }
+  }
+}
+
+function nl2br(str){
+str = str.replace(/(?:\r\n|\r|\n)/g, '<br>');
+return str.replace(/\t/g, '<t>');
+
+}
+function br2nl(str){
+  str = str.replace(/<br>/g,'\n');
+return str.replace(/<t>/g,'\t');
+}
+var courses_string="";
+function addcourse()
+{
+  var name = document.getElementById("coursename").value;
+  document.getElementById("coursename").value = "";
+  var weight = document.getElementById("coursew").value;
+  document.getElementById("coursew").value = "";
+   courses_string = courses_string.concat(name,",",weight,";");
+   document.getElementById("courses").value = courses_string;
+   var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("tmp-courses").innerHTML = this.responseText;
+  }
+}
+xmlhttp.open("GET", "viewtmp.php?q=" + courses_string, true);
+xmlhttp.send();
+}
+var skills_string = "";
+function addskill()
+{
+  var name = document.getElementById("skillname").value;
+  document.getElementById("skillname").value = "";
+  var weight = document.getElementById("skillw").value;
+  document.getElementById("skillw").value = "";
+   skills_string = skills_string.concat(name,",",weight,";");
+   document.getElementById("skills").value = skills_string;
+   var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("tmp-skills").innerHTML = this.responseText;
+  }
+}
+xmlhttp.open("GET", "viewtmp.php?q=" + skills_string, true);
+xmlhttp.send();
+}
+var langs_string = "";
+function addlang()
+{
+  var name = document.getElementById("langname").value;
+  document.getElementById("langname").value = "";
+  var weight = document.getElementById("langw").value;
+  document.getElementById("langw").value = "";
+   langs_string = langs_string.concat(name,",",weight,";");
+   document.getElementById("langs").value = langs_string;
+   var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("tmp-langs").innerHTML = this.responseText;
+  }
+}
+xmlhttp.open("GET", "viewtmp.php?q=" + langs_string, true);
+xmlhttp.send();
+}
+function loadjob(str)
+{
+  var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+ if (this.readyState == 4 && this.status == 200) {
+   document.getElementById("applicants_list").innerHTML = this.responseText;
+ }
+}
+xmlhttp.open("GET", "viewapplicants_list.php?q=" + str, true);
+xmlhttp.send();
+}
+var edu_string = "";
+function addcollege()
+{
+  var name = document.getElementById("collegename").value;
+  document.getElementById("collegename").value = "";
+  var weight = document.getElementById("collegecredit").value;
+  document.getElementById("collegecredit").value = "";
+  var field = document.getElementById("field").value;
+  document.getElementById("field").value = "";
+  var excellent_weight = document.getElementById("excellent").value;
+  document.getElementById("excellent").value = "";
+  var verygood_weight = document.getElementById("verygood").value;
+  document.getElementById("verygood").value = "";
+  var good_weight = document.getElementById("good").value;
+  document.getElementById("good").value = "";
+  var pass_weight = document.getElementById("pass").value;
+  document.getElementById("pass").value = "";
+  var honor_weight = document.getElementById("hweight").value;
+  document.getElementById("hweight").value = "";
+  var degree = document.getElementById("degree").value;
+  document.getElementById("degree").value = "";
+   edu_string = edu_string.concat(name,",",weight,",",field,",",excellent_weight,",",verygood_weight,",",good_weight,",",pass_weight,",",honor_weight,",",Degree,";");
+   document.getElementById("education").value = edu_string;
+   var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("tmp-college").innerHTML = this.responseText;
+  }
+}
+xmlhttp.open("GET", "viewedu.php?q=" + edu_string, true);
+xmlhttp.send();
+}
+
+</script>
+    <meta charset="utf-8">
+    <title>Central bank of egypt portal</title>
+  </head>
+  <body>
+    <input type="file" hidden onchange="$('img.mypp').attr('src',window.URL.createObjectURL(this.files[0]));" id="mypp">
+      <div>
+        <ul class="nav nav-tabs nav-fill">
+          <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#newjob"><img src="hiring.svg" style="width:10vh;height:10vh;"></img></a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#applicants"><img src="resume.svg" style="width:10vh;height:10vh;"></img></a></li>
+        </ul>
+        <div class="tab-content" style="min-height:100vh;">
+          <div id="newjob" style="min-height:100vh;" role="tabpanel" class="tab-pane fade show active">
+            <div class="container" style="height:15%;width:15%;margin-top:2%;">
+              <img src="hiringrequest.svg"  alt="">
+            </div>
+            <form class="container" action="addjob.php" method="get">
+                <input class="index" hidden name="index">
+                <div class="form-group" style="margin-top:1%;margin-left:35%;margin-right:35%;">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Submit new job</button>
+                </div>
+      <div class="form-row" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+          <div class="col-6">
+<input type="text" list="employment-type-list" placeholder="employment type" class="form-control" id="employmenttype" name="employmenttype" aria-describedby="emailHelp">
+            <datalist id="employment-type-list">
+              <option value="Full-time">
+                <option value="Part-time">
+                  <option value="Self-employed">
+                    <option value="freelance">
+                      <option value="contract">
+                        <option value="internship">
+                          <option value="Training">
+                            </datalist>
+                              </div>
+        <div class="col-6">
+          <input type="text" id="jobtitle" name="jobtitle" class="form-control" placeholder="jobtitle">
+        </div>
+      </div>
+      <div class="form-row" style="margin-top:2%;margin-left:15%;margin-right:15%;">
+        <div class="col-6">
+          <input type="text" list="prof-list" placeholder="profession required" class="form-control" id="profession" name="profession" aria-describedby="emailHelp">
+          <datalist id="prof-list">
+            <option value="bank cashier">
+                  <option value="loan officer">
+                    <option value="financial advisor">
+                      <option value="financial manager">
+                        <option value="money charger">
+                          <option value="credit manager">
+                            <option value="stock trader">
+                            </datalist>
+        </div>
+        <div class="col-6">
+          <input type="text" id="function" name="function" class="form-control" placeholder="job function">
+        </div>
+      </div>
+      <div class="form-row" style="margin-top:2%;margin-left:15%;margin-right:15%;">
+        <div class="col-6">
+          <input type="number" id="experience" name="experience" class="form-control" placeholder="how many of years of experience do you atleast recommend">
+        </div>
+        <div class="col-6">
+          <input type="number" name="edu_weight" class="form-control" placeholder="What is the weight of education?">
+        </div>
+      </div>
+      <div class="form-row" style="margin-top:2%;margin-left:15%;margin-right:15%;">
+      <div class="col-6">
+        <input type="number" name="skills_weight" class="form-control" placeholder="What is the weight of skills?">
+      </div>
+      <div class="col-6">
+        <input type="number" name="languages_weight" class="form-control" placeholder="What is the weight of languages?">
+      </div>
+    </div>
+    <div class="form-row" style="margin-top:2%;margin-left:15%;margin-right:15%;">
+    <div class="col-6">
+      <input type="number" name="courses_weight" class="form-control" placeholder="What is the weight of courses?">
+    </div>
+  </div>
+      <div class="form-row" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+        <input id="jd" type="text" name="jobdescription" hidden>
+      <textarea class="form-control" placeholder="job description" onblur="document.getElementById('jd').value=nl2br(this.value);" id="jobdescription" rows="5"></textarea>
+    </div>
+    <input type="text" id="education" name="education" hidden>
+    <div style="margin:3%;margin-left:20%;margin-right:20%;" class="dropdown-divider"></div>
+    <h4 style="text-align:center;">Certain college recomendation</h4>
+    <div class="form-group" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+    <input list="college-list" id="collegename"class="form-control" placeholder="college name" type="text">
+    <datalist id="college-list">
+      <option value="Ahram Canadian University">
+      <option value="Ain Shams University">
+      <option value="Al Alamein International University">
+      <option value="Al-Azhar University">
+      <option value="Alexandria University">
+      <option value="Arab Academy for Science, Technology and Maritime Transport">
+      <option value="Arish University">
+      <option value="Assiut University">
+      <option value="Aswan University">
+      <option value="Badr University in Cairo">
+      <option value="Benha University">
+      <option value="Beni-Suef University">
+      <option value="Cairo University">
+      <option value="Damanhour University">
+      <option value="Damietta University">
+      <option value="Delta University for Science and Technology">
+      <option value="Deraya University">
+      <option value="Egyptian Chinese University">
+      <option value="Egyptian Russian University">
+      <option value="Egypt-Japan University of Science and Technology">
+      <option value="Fayoum University">
+      <option value="Future University in Egypt">
+      <option value="Heliopolis University">
+      <option value="Helwan University">
+      <option value="Kafrelsheikh University">
+      <option value="Mansoura University">
+      <option value="Matrouh University">
+      <option value="Menoufia University">
+      <option value="Minia University">
+      <option value="Misr International University">
+      <option value="Misr University for Science and Technology">
+      <option value="Modern Sciences and Arts University">
+      <option value="Modern University for Technology and Information">
+      <option value="Nahda University">
+      <option value="New Giza University">
+      <option value="New Valley University">
+      <option value="Nile University">
+      <option value="October 6 University">
+      <option value="Pharos University in Alexandria">
+      <option value="Port Said University">
+      <option value="Sinai University">
+      <option value="Sohag university">
+      <option value="South Valley University">
+      <option value="Suez Canal University">
+      <option value="Suez University">
+      <option value="Tanta University">
+      <option value="The American University in Cairo">
+      <option value="The Arab Academy for Management, Banking and Financial Sciences">
+      <option value="The British University in Egypt">
+      <option value="The German University in Cairo">
+      <option value="Université Française d'Égypte">
+      <option value="University of Sadat City">
+      <option value="University of Science and Technology at Zewail City">
+      <option value="Zagazig University">
+                    </datalist>
+    </div>
+    <div class="form-row" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+      <div class="col-6">
+    <input id="field" class="form-control" placeholder="field of study" type="text">
+    </div>
+    <div class="col-6">
+      <input type="text" list="degree-list" placeholder="what is the academic degree you want ?" class="form-control" id="degree" name="degree" aria-describedby="emailHelp">
+      <datalist id="degree-list">
+        <option value="associate-degree">
+          <option value="Bachelor degree">
+            <option value="Licentiate">
+              <option value="Master degree">
+                <option value="Doctoral degree">
+                      </datalist>
+                        </div>
+    </div>
+    <div class="form-group" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+      <input id="collegecredit"class="form-control" placeholder="credit points" type="number">
+    </div>
+    <div class="form-row" style="margin-top:2%;margin-left:15%;margin-right:15%;">
+      <div class="col-3">
+        <label for="excellent">Excellent</label>
+        <input type="number" placeholder="credit points" class="form-control" id="excellent" aria-describedby="emailHelp">
+      </div>
+      <div class="col-3">
+        <label for="verygood">Very good</label>
+        <input type="number" id="verygood"  class="form-control" placeholder="credit points">
+      </div>
+      <div class="col-3">
+        <label for="good">Good</label>
+        <input type="number" placeholder="credit points" class="form-control" id="good" aria-describedby="emailHelp">
+      </div>
+      <div class="col-3">
+        <label for="pass">Pass</label>
+        <input type="number" id="pass" class="form-control" placeholder="credit points">
+      </div>
+    </div>
+    <div class="form-group" style="margin-top:5%;margin-left:30%;margin-right:30%;">
+            <label for="pass">honor degree</label>
+      <input type="number" id="hweight" class="form-control" placeholder="credit points">
+    </div>
+    <div class="form-group" style="margin-top:5%;margin-left:30%;margin-right:30%;">
+    <button type="button" id="project-add" onclick="addcollege();" class="btn btn-primary btn-lg btn-block">Add recommendation</button>
+    </div>
+    <div style="margin:3%;margin-left:20%;margin-right:20%;" class="dropdown-divider"></div>
+    <div class="container" id="tmp-college">
+    </div>
+    <h4 style="text-align:center;margin-top:2%;">Add courses</h4>
+    <input class="index" id="courses" name="courses" hidden name="index">
+    <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+      <input type="text" class="form-control" id="coursename" placeholder="what course do you want to add ?">
+    </div>
+    <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+    <input type="number" class="form-control" id="coursew" placeholder="what is the weight ?">
+  </div>
+  <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+  <button type="button" onclick="addcourse();" class="btn btn-primary btn-lg btn-block">Add course</button>
+</div>
+    <div class="container" id="tmp-courses">
+    </div>
+    <div style="margin:3%;margin-left:20%;margin-right:20%;" class="dropdown-divider"></div>
+    <h4 style="text-align:center;margin-top:2%;">Add skills</h4>
+    <input class="index" list="skill_list" hidden id="skills" name="skills">
+    <datalist id="skill_list">
+      <option value="Communication skills">
+    <option value="Problem solving">
+    <option value="Customer service">
+    <option value="Numeracy skills">
+    <option value="Team work">
+    <option value="time management">
+    <option value="team management">
+    <option value="Organisation">
+    </datalist>
+    <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+      <input type="text"class="form-control" id="skillname" placeholder="what is the skill you want to add ?">
+    </div>
+    <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+    <input type="number" class="form-control" id="skillw" placeholder="what is the weight ?">
+  </div>
+  <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+    <button type="button" onclick="addskill();" class="btn btn-primary btn-lg btn-block">Add skill</a>
+  </div>
+    <div class="container" id="tmp-skills">
+    </div>
+    <div style="margin:3%;margin-left:20%;margin-right:20%;" class="dropdown-divider"></div>
+    <input class="index" list="language_list" hidden id="langs" name="langs">
+<datalist id="language_list">
+  <option value="Afrikaans">
+<option value="Albanian">
+<option value="Arabic">
+<option value="Aramaic">
+<option value="Armenian">
+<option value="Assamese">
+<option value="Aymara">
+<option value="Azerbaijani">
+<option value="Balochi">
+<option value="Bamanankan">
+<option value="Bashkort Basque">
+<option value="Belarusan">
+<option value="Bengali">
+<option value="Bhojpuri">
+<option value="Bislama">
+<option value="Bosnian">
+<option value="Brahui">
+<option value="Bulgarian">
+<option value="Burmese">
+<option value="Cantonese">
+<option value="Catalan">
+<option value="Cebuano">
+<option value="Chechen">
+<option value="Cherokee">
+<option value="Croatian">
+<option value="Czech">
+<option value="Dakota">
+<option value="Danish">
+<option value="Dari">
+<option value="Dholuo">
+<option value="Dutch">
+<option value="English">
+<option value="Esperanto">
+<option value="Estonian">
+<option value="Éwé">
+<option value="Finnish">
+<option value="French">
+<option value="Georgian">
+<option value="German">
+<option value="Gikuyu">
+<option value="Greek">
+<option value="Guarani">
+<option value="Gujarati">
+<option value="Haitian Creole">
+<option value="Hausa">
+<option value="Hawaiian">
+<option value="Hawaiian Creole">
+<option value="Hebrew">
+<option value="Hiligaynon">
+<option value="Hindi">
+<option value="Hungarian">
+<option value="Icelandic">
+<option value="Igbo">
+<option value="Ilocano">
+<option value="Indonesian">
+<option value="Inuit ">
+<option value="Japanese">
+<option value="Jarai">
+<option value="Javanese">
+<option value="K’iche’">
+<option value="Kabyle">
+<option value="Kannada">
+<option value="Kashmiri">
+<option value="Kazakh">
+<option value="Khmer">
+<option value="Khoekhoe">
+<option value="Korean">
+<option value="Kurdish">
+<option value="Kyrgyz">
+<option value="Lao">
+<option value="Latin">
+<option value="Latvian">
+<option value="Lingala">
+<option value="Lithuanian">
+<option value="Macedonian">
+<option value="Maithili">
+<option value="Malagasy">
+<option value="Malay">
+<option value="Malayalam">
+<option value="Mandarin Marathi">
+<option value="Mende">
+<option value="Mongolian">
+<option value="Nahuatl">
+<option value="Navajo">
+<option value="Nepali">
+<option value="Norwegian">
+<option value="Ojibwa">
+<option value="Oriya">
+<option value="Oromo">
+<option value="Pashto">
+<option value="Persian">
+<option value="Polish">
+<option value="Portuguese">
+<option value="Punjabi">
+<option value="Quechua">
+<option value="Romani">
+<option value="Romanian">
+<option value="Russian">
+<option value="Rwanda">
+<option value="Samoan">
+<option value="Sanskrit">
+<option value="Serbian">
+<option value="Shona">
+<option value="Sindhi">
+<option value="Sinhala">
+<option value="Slovak">
+<option value="Slovene">
+<option value="Somali">
+<option value="Spanish">
+<option value="Swahili">
+<option value="Swedish">
+<option value="Tachelhit">
+<option value="Tagalog">
+<option value="Tajiki">
+<option value="Tamil">
+<option value="Tatar">
+<option value="Telugu">
+<option value="Thai">
+<option value="Tibetic">
+<option value="TigrignaTok ">
+<option value="Turkish">
+<option value="Turkmen">
+<option value="Ukrainian">
+<option value="Urdu">
+<option value="Uyghur">
+<option value="Uzbek">
+<option value="Vietnamese">
+<option value="Warlpiri">
+<option value="Welsh">
+<option value="Wolof">
+<option value="Xhosa">
+<option value="Yakut">
+<option value="Yiddish">
+<option value="Yoruba">
+<option value="Yucatec">
+<option value="Zapotec">
+<option value="Zulu">
+</datalist>
+    <h4 style="text-align:center;margin-top:2%;">Add languages</h4>
+    <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+      <input type="text" class="form-control" id="langname" placeholder="what is the language you want to add ?">
+    </div>
+    <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+    <input type="number" class="form-control" id="langw" placeholder="what is the weight ?">
+  </div>
+  <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+    <button type="button" onclick="addlang();" class="btn btn-primary btn-lg btn-block">Add language</a>
+  </div>
+    <div class="container" id="tmp-langs">
+    </div>
+            </form>
+  </div>
+  <div id="applicants" class="tab-pane fade">
+
+  </div>
+          </div>
+
+
+        </div>
+        <!-- Modal -->
+<div class="modal fade" id="applicationlist" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Job applicants</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="applicants_list" class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">remove request</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$.post("myrequests.php", {index: name}, function(result){$("#applicants").html(result)});
+$('#applicationlist').on('show.bs.modal	', function (e) {
+  document.getElementById("applicants_list").innerHTML = '<div class="d-flex justify-content-center"><div style="width:26vh;height:26vh;margin-top:2%;" class="spinner-border " role="status"><span class="sr-only">Loading...</span></div></div>';
+})
+$("input.index").attr("value",name);
+$("form").submit(function(event){
+  event.preventDefault(); //prevent default action
+	var post_url = $(this).attr("action"); //get form action url
+	var request_method = $(this).attr("method"); //get form GET/POST method
+	var form_data = $(this).serialize(); //Encode form elements for submission
+	$.ajax({
+		url : post_url,
+		type: request_method,
+		data : form_data
+	}).done(function(response){ //
+		alert(response);
+	});
+});
+texts();
+</script>
+  </body>
+</html>

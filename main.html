@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+//load user information from session
+  var name = sessionStorage.getItem("name");
+  var email = sessionStorage.getItem("email");
+  var gender = sessionStorage.getItem("gender");
+  var city = sessionStorage.getItem("city");
+  var region = sessionStorage.getItem("region");
+  function apply(str)
+  {
+    var xmlhttp = new XMLHttpRequest();
+ xmlhttp.onreadystatechange = function() {
+   if (this.readyState == 4 && this.status == 200) {
+     alert(this.responseText);
+   }
+ };
+ xmlhttp.open("GET", "apply.php?q=" + str + "&p=" + name, true);
+ xmlhttp.send();
+  }
+  function texts(){
+  var textareas = document.getElementsByTagName('textarea');
+  var count = textareas.length;
+  for(var i=0;i<count;i++){
+  textareas[i].onkeydown = function(e){
+      if(e.keyCode==9 || e.which==9){
+          e.preventDefault();
+          var s = this.selectionStart;
+          this.value = this.value.substring(0,this.selectionStart) + "\t" + this.value.substring(this.selectionEnd);
+          this.selectionEnd = s+1;
+      }
+  }
+  }
+}
+
+function nl2br(str){
+str = str.replace(/(?:\r\n|\r|\n)/g, '<br>');
+return str.replace(/\t/g, '<t>');
+
+}
+function br2nl(str){
+  str = str.replace(/<br>/g,'\n');
+return str.replace(/<t>/g,'\t');
+}
+var projects_string="";
+var activity_string="";
+function addproject()
+{
+  var name = document.getElementById("projectname").value;
+  var description = nl2br(document.getElementById("projectdescription").value);
+  document.getElementById("projectname").value = "";
+  document.getElementById("projectdescription").value = "";
+   projects_string = projects_string.concat(name,",",description,";");
+   document.getElementById("projects").value = projects_string;
+   var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("tmp-projects").innerHTML = this.responseText;
+  }
+};
+xmlhttp.open("GET", "viewtmpprojects.php?q=" + projects_string, true);
+xmlhttp.send();
+}
+
+
+
+
+function addactivity()
+{
+  var name = document.getElementById("activityname").value;
+  var description = nl2br(document.getElementById("activitydescription").value);
+  document.getElementById("activityname").value = "";
+  document.getElementById("activitydescription").value = "";
+   projects_string = projects_string.concat(name,",",description,";");
+   document.getElementById("activities").value = projects_string;
+   var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("tmp-activities").innerHTML = this.responseText;
+  }
+};
+xmlhttp.open("GET", "viewtmpprojects.php?q=" + projects_string, true);
+xmlhttp.send();
+}
+function updatehome(){
+  q = document.getElementById("name").innerHTML;
+  p = document.getElementById("profession").innerHTML;
+  r = document.getElementById("about").innerHTML;
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange=function() {
+  if (this.readyState==4 && this.status==200) {
+    alert(this.responseText);
+  }
+}
+xmlhttp.open("GET", "updatehome.php?q="+q+"&p="+p+"&r="+r+"&i="+email, true);
+xmlhttp.send();
+}
+</script>
+    <meta charset="utf-8">
+    <title>Central bank of egypt portal</title>
+  </head>
+  <body>
+    <input type="file" hidden onchange="$('img.mypp').attr('src',window.URL.createObjectURL(this.files[0]));" id="mypp">
+      <div>
+        <ul class="nav nav-tabs nav-fill">
+          <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#portfolio"><img src="portfolio.svg" style="width:10%;height:10%;"></img></a></li>
+          <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#hiring"><img src="wearehiring.svg" style="width:10%;height:10%;"></img></a></li>
+        </ul>
+        <div class="tab-content" style="min-height:100vh;">
+          <div id="portfolio" style="min-height:100vh;" role="tabpanel" class="tab-pane fade show active">
+            <div class="row bg-dark" style="min-height:100vh;">
+              <div class="col-3 border-right">
+                <div class="container">
+                  <label style="width:100%;height:100%;margin:5%;" for="mypp"><img class="mypp" style="border-radius:50%;width:100%;height:100%;margin:auto;" alt=""></label>
+                </div>
+                <div class="overflow-auto">
+                  <ul class="nav nav-pills container flex-column nav-fill" style="margin:auto;">
+                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#Home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#work-history">Experience</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#education">education</a></li>
+                    <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#skills">skills & courses</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-9 tab-content">
+                <div id="Home" style="text-align:center;color:white" role="tabpanel" class="tab-pane fade show active overflow-auto">
+                </div>
+                <div id="work-history" role="tabpanel" class="tab-pane fade">
+                  <div id="historycarousel" class="carousel slide">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="container" style="color:white;">
+          <form method="get" action="addexperience.php">
+            <input class="index" hidden name="index">
+            <div class="form-group" style="margin-top:1%;margin-left:35%;margin-right:35%;">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Add experience</button>
+            </div>
+  <div class="form-row" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+    <div class="col-6">
+      <input type="text" list="employment-type-list" placeholder="employment type" class="form-control" id="employmenttype" name="employmenttype" aria-describedby="emailHelp">
+      <datalist id="employment-type-list">
+        <option value="Full-time">
+          <option value="Part-time">
+            <option value="Self-employed">
+              <option value="freelance">
+                <option value="contract">
+                  <option value="internship">
+                    <option value="Training">
+                      </datalist>
+                        </div>
+    <div class="col-6">
+      <input type="text" id="institutionname" name="institutionname" class="form-control" placeholder="institution name">
+    </div>
+  </div>
+  <div class="form-row" style="margin-top:2%;margin-left:15%;margin-right:15%;">
+    <div class="col-6">
+      <input type="text" placeholder="location" class="form-control" id="location" name="location" aria-describedby="emailHelp">
+    </div>
+    <div class="col-6">
+      <input type="text" id="jobtitle" name="jobtitle" class="form-control" placeholder="job title">
+    </div>
+  </div>
+  <div class="form-group" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+    <input id="jd" type="text" name="jobdescription" hidden>
+  <textarea class="form-control" placeholder="job description" onblur="document.getElementById('jd').value=nl2br(this.value);" id="jobdescription" rows="5"></textarea>
+</div>
+<input type="text" id="projects" name="projects" hidden>
+<div style="margin:3%;margin-left:20%;margin-right:20%;" class="dropdown-divider"></div>
+<h4 style="text-align:center;">Add projects</h4>
+<div class="form-group" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+<input id="projectname"class="form-control" placeholder="project name" type="text">
+</div>
+<div class="form-group" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+<textarea class="form-control" placeholder="project description" id="projectdescription" rows="3"></textarea>
+</div>
+<div class="form-group" style="margin-top:5%;margin-left:30%;margin-right:30%;">
+<button type="button" id="project-add" onclick="addproject();" class="btn btn-primary btn-lg btn-block">Add project</button>
+</div>
+<div style="margin:3%;margin-left:20%;margin-right:20%;" class="dropdown-divider"></div>
+<div class="container" id="tmp-projects">
+</div>
+</form>
+        </div>
+      </div>
+      <div id="experience_id" class="carousel-item">
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#historycarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#historycarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+  <div id="education" role="tabpanel" class="tab-pane fade">
+  <div id="educationcarousel" class="carousel slide">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <div class="container" style="color:white;">
+          <form method="get" action="addeducation.php">
+            <input class="index" hidden name="index">
+            <div class="form-group" style="margin-top:1%;margin-left:35%;margin-right:35%;">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Add Education</button>
+            </div>
+  <div class="form-row" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+    <div class="col-6">
+      <input type="text" list="degree-list" placeholder="degree" class="form-control" id="degree" name="degree" aria-describedby="emailHelp">
+      <datalist id="degree-list">
+        <option value="associate-degree">
+          <option value="Bachelor degree">
+            <option value="Licentiate">
+              <option value="Master degree">
+                <option value="Doctoral degree">
+                      </datalist>
+                        </div>
+    <div class="col-6">
+      <input type="text" list="college-list" id="collegename" name="collegename" class="form-control" placeholder="college name">
+      <datalist id="college-list">
+        <option value="Ahram Canadian University">
+        <option value="Ain Shams University">
+        <option value="Al Alamein International University">
+        <option value="Al-Azhar University">
+        <option value="Alexandria University">
+        <option value="Arab Academy for Science, Technology and Maritime Transport">
+        <option value="Arish University">
+        <option value="Assiut University">
+        <option value="Aswan University">
+        <option value="Badr University in Cairo">
+        <option value="Benha University">
+        <option value="Beni-Suef University">
+        <option value="Cairo University">
+        <option value="Damanhour University">
+        <option value="Damietta University">
+        <option value="Delta University for Science and Technology">
+        <option value="Deraya University">
+        <option value="Egyptian Chinese University">
+        <option value="Egyptian Russian University">
+        <option value="Egypt-Japan University of Science and Technology">
+        <option value="Fayoum University">
+        <option value="Future University in Egypt">
+        <option value="Heliopolis University">
+        <option value="Helwan University">
+        <option value="Kafrelsheikh University">
+        <option value="Mansoura University">
+        <option value="Matrouh University">
+        <option value="Menoufia University">
+        <option value="Minia University">
+        <option value="Misr International University">
+        <option value="Misr University for Science and Technology">
+        <option value="Modern Sciences and Arts University">
+        <option value="Modern University for Technology and Information">
+        <option value="Nahda University">
+        <option value="New Giza University">
+        <option value="New Valley University">
+        <option value="Nile University">
+        <option value="October 6 University">
+        <option value="Pharos University in Alexandria">
+        <option value="Port Said University">
+        <option value="Sinai University">
+        <option value="Sohag university">
+        <option value="South Valley University">
+        <option value="Suez Canal University">
+        <option value="Suez University">
+        <option value="Tanta University">
+        <option value="The American University in Cairo">
+        <option value="The Arab Academy for Management, Banking and Financial Sciences">
+        <option value="The British University in Egypt">
+        <option value="The German University in Cairo">
+        <option value="Université Française d'Égypte">
+        <option value="University of Sadat City">
+        <option value="University of Science and Technology at Zewail City">
+        <option value="Zagazig University">
+                      </datalist>
+                        </div>
+    </div>
+  </div>
+  <div class="form-row" style="margin-top:2%;margin-left:15%;margin-right:15%;">
+    <div class="col-6">
+      <input type="text" placeholder="location" class="form-control" id="location" name="location" aria-describedby="emailHelp">
+    </div>
+    <div class="col-6">
+      <input type="text" id="grade" name="grade" class="form-control" placeholder="Grade">
+    </div>
+  </div>
+<div class="form-group" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+  <input id="field" type="text" name="field" class="form-control" placeholder="field">
+</div>
+<div style="margin-top:5%;margin-left:15%;margin-right:15%;" class="form-check">
+  <input class="form-check-input" type="radio" name="honor" id="ish" value="1">
+  <label class="form-check-label" for="ish">
+    I graduated with honor degree
+  </label>
+</div>
+<div style="margin-left:15%;margin-right:15%;" class="form-check">
+  <input class="form-check-input" type="radio" id="nots" name="honor" value="0" checked>
+  <label class="form-check-label" for="nots">
+I did not graduate with honor degree
+  </label>
+</div>
+<div class="form-row" style="margin-top:2%;margin-left:15%;margin-right:15%;">
+  <div class="col-6">
+    <label for="startdate">start date</label>
+    <input type="date" class="form-control" id="startdate" name="startdate" aria-describedby="emailHelp">
+  </div>
+  <div class="col-6">
+    <label for="graduationdate">graduation date</label>
+    <input type="date" id="graduationdate" name="graduationdate" class="form-control">
+  </div>
+</div>
+<div class="form-group" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+  <input id="ed" type="text" name="educationdescription" hidden>
+<textarea class="form-control" placeholder="describe what you studied in that place" onblur="document.getElementById('ed').value=nl2br(this.value);" id="educationdescription" rows="5"></textarea>
+</div>
+<input type="text" name="activities" id="activities" hidden>
+<div style="margin:3%;margin-left:20%;margin-right:20%;" class="dropdown-divider"></div>
+<h4 style="text-align:center;">Add activities</h4>
+<div class="form-group" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+<input id="activityname"class="form-control" placeholder="activity name" type="text">
+</div>
+<div class="form-group" style="margin-top:5%;margin-left:15%;margin-right:15%;">
+<textarea class="form-control" placeholder="activity description" id="activitydescription" rows="3"></textarea>
+</div>
+<div class="form-group" style="margin-top:5%;margin-left:30%;margin-right:30%;">
+<button type="button" id="activity-add" onclick="addactivity();" class="btn btn-primary btn-lg btn-block">Add activity</button>
+</div>
+<div style="margin:3%;margin-left:20%;margin-right:20%;" class="dropdown-divider"></div>
+<div class="container" id="tmp-activities">
+</div>
+</form>
+        </div>
+      <div id ="education_id" class="carousel-item">
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#educationcarousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#educationcarousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+  <div id="skills" role="tabpanel" class="tab-pane fade">
+    <div id="skillscarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <h4 style="text-align:center;color:white;margin-top:2%;">Add courses</h4>
+          <form method="get" action="addcourse.php">
+            <input class="index" hidden name="index">
+            <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+              <input type="text" class="form-control" name="coursename" id="coursename" placeholder="course name">
+            </div>
+            <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+              <input id="cd" type="text" hidden name="coursedescription" >
+              <textarea class="form-control" placeholder="course description" onblur="document.getElementById('cd').value=nl2br(this.value);" id="coursedescriptiontextarea"  rows="3"></textarea>
+            </div>
+            <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Add course</button>
+          </div>
+          </form>
+          <div style="margin-left:15%;margin-right:15%;margin-top:2%;" class="dropdown-divider"></div>
+          <h4 style="text-align:center;color:white;margin-top:2%;">Add skills</h4>
+          <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+            <input type="text" list="skill_list" class="form-control" name="skillname" id="skillname" placeholder="what is the skill you have ?">
+<datalist id="skill_list">
+  <option value="Communication skills">
+<option value="Problem solving">
+<option value="Customer service">
+<option value="Numeracy skills">
+<option value="Team work">
+<option value="time management">
+<option value="team management">
+<option value="Organisation">
+</datalist>
+          </div>
+          <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+            <a type="button"  target="_blank" href="#" onclick="this.href='quiz.php?q='+email+'&p='+document.getElementById('skillname').value;" class="btn btn-primary btn-lg btn-block">Take the skill quiz</a>
+          </div>
+          <div style="margin-left:15%;margin-right:15%;margin-top:2%;" class="dropdown-divider"></div>
+          <h4 style="text-align:center;color:white;margin-top:2%;">Add languages</h4>
+          <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+            <input type="text" list="languages_list" class="form-control" id="langname" placeholder="what is the language ?">
+<datalist id="languages_list">
+  <option value="Afrikaans">
+<option value="Albanian">
+<option value="Arabic">
+<option value="Aramaic">
+<option value="Armenian">
+<option value="Assamese">
+<option value="Aymara">
+<option value="Azerbaijani">
+<option value="Balochi">
+<option value="Bamanankan">
+<option value="Bashkort Basque">
+<option value="Belarusan">
+<option value="Bengali">
+<option value="Bhojpuri">
+<option value="Bislama">
+<option value="Bosnian">
+<option value="Brahui">
+<option value="Bulgarian">
+<option value="Burmese">
+<option value="Cantonese">
+<option value="Catalan">
+<option value="Cebuano">
+<option value="Chechen">
+<option value="Cherokee">
+<option value="Croatian">
+<option value="Czech">
+<option value="Dakota">
+<option value="Danish">
+<option value="Dari">
+<option value="Dholuo">
+<option value="Dutch">
+<option value="English">
+<option value="Esperanto">
+<option value="Estonian">
+<option value="Éwé">
+<option value="Finnish">
+<option value="French">
+<option value="Georgian">
+<option value="German">
+<option value="Gikuyu">
+<option value="Greek">
+<option value="Guarani">
+<option value="Gujarati">
+<option value="Haitian Creole">
+<option value="Hausa">
+<option value="Hawaiian">
+<option value="Hawaiian Creole">
+<option value="Hebrew">
+<option value="Hiligaynon">
+<option value="Hindi">
+<option value="Hungarian">
+<option value="Icelandic">
+<option value="Igbo">
+<option value="Ilocano">
+<option value="Indonesian">
+<option value="Inuit ">
+<option value="Japanese">
+<option value="Jarai">
+<option value="Javanese">
+<option value="K’iche’">
+<option value="Kabyle">
+<option value="Kannada">
+<option value="Kashmiri">
+<option value="Kazakh">
+<option value="Khmer">
+<option value="Khoekhoe">
+<option value="Korean">
+<option value="Kurdish">
+<option value="Kyrgyz">
+<option value="Lao">
+<option value="Latin">
+<option value="Latvian">
+<option value="Lingala">
+<option value="Lithuanian">
+<option value="Macedonian">
+<option value="Maithili">
+<option value="Malagasy">
+<option value="Malay">
+<option value="Malayalam">
+<option value="Mandarin Marathi">
+<option value="Mende">
+<option value="Mongolian">
+<option value="Nahuatl">
+<option value="Navajo">
+<option value="Nepali">
+<option value="Norwegian">
+<option value="Ojibwa">
+<option value="Oriya">
+<option value="Oromo">
+<option value="Pashto">
+<option value="Persian">
+<option value="Polish">
+<option value="Portuguese">
+<option value="Punjabi">
+<option value="Quechua">
+<option value="Romani">
+<option value="Romanian">
+<option value="Russian">
+<option value="Rwanda">
+<option value="Samoan">
+<option value="Sanskrit">
+<option value="Serbian">
+<option value="Shona">
+<option value="Sindhi">
+<option value="Sinhala">
+<option value="Slovak">
+<option value="Slovene">
+<option value="Somali">
+<option value="Spanish">
+<option value="Swahili">
+<option value="Swedish">
+<option value="Tachelhit">
+<option value="Tagalog">
+<option value="Tajiki">
+<option value="Tamil">
+<option value="Tatar">
+<option value="Telugu">
+<option value="Thai">
+<option value="Tibetic">
+<option value="TigrignaTok ">
+<option value="Turkish">
+<option value="Turkmen">
+<option value="Ukrainian">
+<option value="Urdu">
+<option value="Uyghur">
+<option value="Uzbek">
+<option value="Vietnamese">
+<option value="Warlpiri">
+<option value="Welsh">
+<option value="Wolof">
+<option value="Xhosa">
+<option value="Yakut">
+<option value="Yiddish">
+<option value="Yoruba">
+<option value="Yucatec">
+<option value="Zapotec">
+<option value="Zulu">
+</datalist>
+          </div>
+          <div class="form-group" style="margin-left:15%;margin-right:15%;margin-top:2%;">
+            <a type="button"  target="_blank" href="#" onclick="this.href='quiz.php?q='+email+'&p='+document.getElementById('langname').value;" class="btn btn-primary btn-lg btn-block">Take the language quiz</a>
+          </div>
+      </div>
+      <div id="courses_id" class="carousel-item">
+      </div>
+      <div class="carousel-item">
+        <div class="row">
+          <div id="skills_id" class="col-6 border-right">
+            </div>
+          <div id="languages_id" class="col-6">
+          </div>
+      </div>
+      </div>
+      </div>
+      <a class="carousel-control-prev" href="#skillscarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#skillscarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div>
+  </div>
+</div>
+            </div>
+            <div id="hiring" class="tab-pane fade">
+
+            </div>
+          </div>
+        </div>
+</div>
+<script>
+$("form").submit(function(event){
+  event.preventDefault(); //prevent default action
+	var post_url = $(this).attr("action"); //get form action url
+	var request_method = $(this).attr("method"); //get form GET/POST method
+	var form_data = $(this).serialize(); //Encode form elements for submission
+	$.ajax({
+		url : post_url,
+		type: request_method,
+		data : form_data
+	}).done(function(response){ //
+		alert(response);
+	});
+});
+$(document).ready(function(){
+ $(document).on('change', '#mypp', function(){
+  var name = document.getElementById("mypp").files[0].name;
+  var form_data = new FormData();
+  var ext = name.split('.').pop().toLowerCase();
+  if(jQuery.inArray(ext, ['gif','png','jpg','jpeg']) == -1)
+  {
+   alert("Invalid Image File");
+   $('img.mypp').attr('src','employee.svg');
+
+  }
+  var oFReader = new FileReader();
+  oFReader.readAsDataURL(document.getElementById("mypp").files[0]);
+  var f = document.getElementById("mypp").files[0];
+  var fsize = f.size||f.fileSize;
+  if(fsize > 2000000)
+  {
+   alert("Image File Size is very big");
+   $('img.mypp').attr('src','employee.svg');
+  }
+  else
+  {
+   form_data.append("file", document.getElementById('mypp').files[0]);
+   form_data.append("email", email);
+   $.ajax({
+    url:"updatepp.php",
+    method:"POST",
+    data: form_data,
+    contentType: false,
+    cache: false,
+    processData: false,
+    beforeSend:function(){
+    },
+    success:function(data)
+    {
+   }
+   });
+  }
+ });
+});
+texts();
+$.post("home.php", {index: email}, function(result){$("#Home").html(result)});
+$.post("showhiring.php", {index: email}, function(result){$("#hiring").html(result)});
+$.post("experience.php", {index: email}, function(result){$("#experience_id").html(result)});
+$.post("education.php", {index: email}, function(result){$("#education_id").html(result)});
+$.post("courses.php", {index: email}, function(result){$("#courses_id").html(result)});
+$.post("skills.php", {index: email}, function(result){$("#skills_id").html(result)});
+$.post("languages.php", {index: email}, function(result){$("#languages_id").html(result)});
+$("input.index").attr("value",email);
+try {
+  $("img.mypp").attr("src", "pp/"+email);
+}
+catch(err) {
+alert(err.message);
+}
+</script>
+  </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <title>Central bank of egypt portal</title>
+  </head>
+  <body>
+    <div>
+    <div style="margin:2%;">
+    <div class="row" style="min-height:80vh;" >
+      <div class="col-6">
+        <div class="row" style="margin:auto;">
+        <img src="HR.jpeg" style="max-height:500px;height:100%;width:100%;margin:auto;" alt=""/>
+      </div>
+      </div>
+      <div id="index-carousel" class="col-6">
+      <form id="loginform" style="margin:10%;" action="bank_login.php" method="post">
+        <div class="form-group">
+          <label for="login-email">Bank id</label>
+          <input type="text" class="form-control" id="login-id" name="loginid" placeholder="Enter Bank id">
+        </div>
+        <div class="form-group">
+          <label for="login-password">Passwords</label>
+          <input type="password" class="form-control" id="login-password" name="loginpassword" placeholder="Password">
+        </div>
+        <button id="login-button" class="btn btn-primary btn-block submission">login</button>
+      </form>
+    </div>
+
+<script>
+//submit login form
+$("#loginform").submit(function(event){
+	event.preventDefault(); //prevent default action
+	var post_url = $(this).attr("action"); //get form action url
+	var request_method = $(this).attr("method"); //get form GET/POST method
+	var form_data = $(this).serialize(); //Encode form elements for submission
+	$.ajax({
+		url : post_url,
+		type: request_method,
+		data : form_data
+	}).done(function(response){
+    if(response == "incorrect id or password")
+      alert(response);
+    else
+    {
+      //store user information and send them over a session to main page
+      sessionStorage.setItem("name", response);
+      // Simulate a mouse click:
+      window.location.href = "bank.html";
+      // Simulate an HTTP redirect:
+      window.location.replace("bank.html");
+    }
+	});
+});
+</script>
+  </body>
+</html>

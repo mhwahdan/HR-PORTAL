@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <title>Central bank of egypt portal</title>
+  </head>
+  <body>
+    <div>
+    <div style="margin:2%;">
+    <div class="row" style="min-height:80vh;" >
+      <div class="col-6">
+        <div class="row" style="margin:auto;">
+        <img src="HR.jpeg" style="max-height:500px;height:100%;width:100%;margin:auto;" alt=""/>
+      </div>
+      </div>
+      <div keyboard="false" touch="false" id="index-carousel" data-interval="false" class="carousel slide col-6" data-ride="carousel">
+  <div class="carousel-inner">
+    <div  class="carousel-item active container" >
+      <form id="loginform" action="login.php" method="post">
+        <div class="form-group">
+          <label for="login-email">Email address</label>
+          <input type="email" class="form-control" id="login-email" name="loginemail" aria-describedby="emailHelp" placeholder="Enter email">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" class="form-control" id="login-password" name="loginpassword" placeholder="Password">
+        </div>
+        <button id="login-button" class="btn btn-primary btn-block submission">login</button>
+      </form>
+      <div class="dropdown-divider" style="margin:2%;"></div>
+      <div class="alert alert-light" role="alert" style="text-align:center;">
+        <label >dont have an account? </label>
+        <a href="#index-carousel" role="button" data-slide="next">register</a>
+      </div>
+    </div>
+    <div id="register" class="carousel-item container" style="margin:auto;">
+      <nav class="navbar navbar-light">
+  <a class="navbar-brand" href="#index-carousel" role="button" data-slide="prev">
+    <img src="arrow.svg" width="30" height="30" alt="">
+  </a>
+</nav>
+          <form action="register.php" method="post" id="registerform" >
+  <div class="form-group">
+        <input type="text" placeholder="user name" class="form-control" id="register-name" name="register-name" aria-describedby="emailHelp">
+  </div>
+  <div class="form-group">
+  <input type="email" placeholder="email address" class="form-control" id="register-email" name="register-email" aria-describedby="emailHelp">
+  <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+</div>
+<div class="form-group" id="registerprofession" >
+  <input type="text" list="profession-list" placeholder="profession" class="form-control" id="register-profession" name="register-profession" aria-describedby="emailHelp">
+  <small id="emailHelp" class="form-text text-muted">This might be updated later in case you do a career shift.</small>
+  <datalist id="profession-list">
+    <option value="bank cashier">
+          <option value="loan officer">
+            <option value="financial advisor">
+              <option value="financial manager">
+                <option value="money charger">
+                  <option value="credit manager">
+                    <option value="stock trader">
+  </datalist>
+</div>
+<div class="form-group">
+<input type="number" placeholder="Number of years of experience" class="form-control" id="register-experience" name="experience" aria-describedby="emailHelp">
+</div>
+<div class="form-row">
+<div class="form-group col-6">
+  <input type="text" id="gender" hidden name="register-gender" value="">
+  <select onchange='document.getElementById("gender").value = this.value;' id="inputState" class="form-control">
+    <option value="NULL" selected>Gender</option>
+    <option value="male" >male</option>
+    <option value="female">female</option>
+  </select>
+</div>
+<div class="form-group col-6">
+  <input id="register-mobile" name="register-mobile" type="number" class="form-control" placeholder="phone number">
+</div>
+</div>
+  <div class="form-row">
+    <div class="form-group col-7">
+      <input id="city" type="text" name="register-city" class="form-control" placeholder="City">
+    </div>
+    <div class="form-group col-5">
+      <input id="state" type="text" name="register-state" class="form-control" placeholder="State">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group col-6">
+      <input id="register-password" name="register-password" type="password" class="form-control" placeholder="password">
+    </div>
+    <div class="form-group col-6">
+      <input id="register-confirm" name="register-confirm" type="password" class="form-control" placeholder="confirm password">
+    </div>
+  </div>
+  <button  id="register-button" class="btn btn-primary btn-block submission" type="submit">register</button>
+</form>
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+    </div>
+<script>
+//submit registration form
+$("#registerform").submit(function(event){
+	event.preventDefault(); //prevent default action
+	var post_url = $(this).attr("action"); //get form action url
+	var request_method = $(this).attr("method"); //get form GET/POST method
+	var form_data = $(this).serialize(); //Encode form elements for submission
+	$.ajax({
+		url : post_url,
+		type: request_method,
+		data : form_data
+	}).done(function(response){ //
+		alert(response);
+    $("#index-carousel").carousel("prev");
+	});
+});
+//submit login form
+$("#loginform").submit(function(event){
+	event.preventDefault(); //prevent default action
+	var post_url = $(this).attr("action"); //get form action url
+	var request_method = $(this).attr("method"); //get form GET/POST method
+	var form_data = $(this).serialize(); //Encode form elements for submission
+	$.ajax({
+		url : post_url,
+		type: request_method,
+		data : form_data
+	}).done(function(response){
+    if(response == "incorrect user name or password")
+      alert(response);
+    else
+    {
+      //store user information and send them over a session to main page
+      var info = response.split(";");
+      sessionStorage.setItem("name", info[0]);
+      sessionStorage.setItem("email", info[1]);
+      sessionStorage.setItem("gender", info[2]);
+      sessionStorage.setItem("profession", info[3]);
+      sessionStorage.setItem("mobile", info[4]);
+      sessionStorage.setItem("city", info[5]);
+      sessionStorage.setItem("region", info[6]);
+      // Simulate a mouse click:
+      window.location.href = "main.html";
+      // Simulate an HTTP redirect:
+      window.location.replace("main.html?");
+    }
+	});
+});
+</script>
+  </body>
+</html>
