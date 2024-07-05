@@ -1,4 +1,4 @@
-# CBOE-PORTAL
+# HR-PORTAL
 
 web application designed to function as a hiring portal for companies and institutions.
 
